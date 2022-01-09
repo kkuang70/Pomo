@@ -5,17 +5,26 @@
     android:id="@+id/pomo_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffff0000"
+    android:background="#7B1818"
     tools:context=".activities.PomodoroDetails">
 
     <TextView
         android:id="@+id/countdown_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:text="10:00"
-        android:textSize="50sp"
         android:textColor="@color/white"
+        android:textSize="100sp" />
+
+    <Button
+        android:id="@+id/pause_button"
+        android:layout_width="115dp"
+        android:layout_height="61dp"
+        android:layout_below="@id/countdown_text"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:backgroundTint="@color/black"
+        android:text="PAUSE"
+        android:textSize="17sp"/>
 
 </RelativeLayout>
