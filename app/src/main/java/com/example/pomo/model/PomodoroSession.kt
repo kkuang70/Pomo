@@ -9,8 +9,8 @@ data class PomodoroSession (
     val id: Int,
     val title: String,
     val description: String,
-    val studyMinutes: Int,
-    val breakMinutes: Int,
+    val studyMinutes: Float,
+    val breakMinutes: Float,
     val startDateTime: String,
     val endDateTime: String
 )

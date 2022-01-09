@@ -30,8 +30,10 @@ class MainActivity : AppCompatActivity(), PomodoroAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(position: Int) {
+        Toast.makeText(this, "Item $position clicked", Toast.LENGTH_SHORT).show()
+/*
         mPomodoroSessionViewModel.deletePomodoroSession(adapter.getData(position))
-        adapter.notifyItemRemoved(position)
+        adapter.notifyItemRemoved(position)*/
     }
 
     fun addItemScreen(view: View) {

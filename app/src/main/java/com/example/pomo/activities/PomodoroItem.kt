@@ -7,8 +7,8 @@ data class PomodoroItem(
     var imageResource: Int,
     var title: String?,
     var description: String?,
-    var studyTime: Int?,
-    var breakTime: Int?,
+    var studyTime: Float?,
+    var breakTime: Float?,
     var dateStart: Date,
     var dateEnd: Date
 ) : Serializable

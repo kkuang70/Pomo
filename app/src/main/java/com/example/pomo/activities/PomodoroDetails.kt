@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.pomo.R
-import com.example.pomo.activities.MainActivity
 import com.example.pomo.model.PomodoroSession
 import com.example.pomo.viewmodel.PomodoroSessionViewModel
 import com.example.pomo.util.Stopwatch
@@ -17,8 +16,8 @@ import java.util.*
 
 class PomodoroDetails : AppCompatActivity() {
     private lateinit var countdownText: TextView
-    private var timeLeftInMilliseconds: Long = 0
-    private var breakTimeLeftInMilliseconds: Long = 0
+    private var timeLeftInMilliseconds: Float = 0.0F
+    private var breakTimeLeftInMilliseconds: Float = 0.0F
 
     private lateinit var mPomodoroSessionViewModel: PomodoroSessionViewModel
     private lateinit var message: PomodoroDataItem
@@ -33,8 +32,8 @@ class PomodoroDetails : AppCompatActivity() {
         mPomodoroSessionViewModel = ViewModelProvider(this).get(PomodoroSessionViewModel::class.java)
 
         if (message != null) {
-            timeLeftInMilliseconds = message.studyTime.toLong() * 60000
-            breakTimeLeftInMilliseconds = message.breakTime.toLong() * 60000
+            timeLeftInMilliseconds = message.studyTime.toFloat() * 60000
+            breakTimeLeftInMilliseconds = message.breakTime.toFloat() * 60000
         }
 
         countdownText = findViewById(R.id.countdown_text)

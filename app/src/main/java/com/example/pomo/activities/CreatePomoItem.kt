@@ -17,8 +17,8 @@ class CreatePomoItem : AppCompatActivity() {
     fun goToTimer(view: View) {
         val titleText = findViewById<EditText>(R.id.title).text.toString()
         val descriptionText = findViewById<EditText>(R.id.description).text.toString()
-        val studyMinutesText = findViewById<EditText>(R.id.study_minutes).text.toString().toInt()
-        val breakMinutesText = findViewById<EditText>(R.id.break_minutes).text.toString().toInt()
+        val studyMinutesText = findViewById<EditText>(R.id.study_minutes).text.toString().toFloat()
+        val breakMinutesText = findViewById<EditText>(R.id.break_minutes).text.toString().toFloat()
         val pomodoroDataItem: PomodoroDataItem = PomodoroDataItem(
             titleText,
             descriptionText,
@@ -34,6 +34,6 @@ class CreatePomoItem : AppCompatActivity() {
 data class PomodoroDataItem(
     val title: String?,
     val description: String?,
-    val studyTime: Int,
-    val breakTime: Int
+    val studyTime: Float,
+    val breakTime: Float
 ) : Serializable

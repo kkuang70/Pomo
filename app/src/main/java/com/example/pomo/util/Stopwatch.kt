@@ -4,18 +4,18 @@ import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
-class Stopwatch constructor(timeLeftInMilliseconds: Long, finishedFn: () -> Unit) {
+class Stopwatch(timeLeftInMilliseconds: Float, finishedFn: () -> Unit) {
     private lateinit var countDownTimer: CountDownTimer
-    private var timeLeftInMilliseconds: Long = timeLeftInMilliseconds
+    private var timeLeftInMilliseconds: Float = timeLeftInMilliseconds
     private var finishedFn = finishedFn
     private var timerRunning: Boolean = false
     private val _countDownText = MutableLiveData<String>()
     var countDownText : LiveData<String> = _countDownText
 
     fun startTimer() {
-        countDownTimer = object: CountDownTimer(timeLeftInMilliseconds, 1000) {
+        countDownTimer = object: CountDownTimer(timeLeftInMilliseconds.toLong(), 1000) {
             override fun onTick(l: Long) {
-                timeLeftInMilliseconds = l
+                timeLeftInMilliseconds = l.toFloat()
                 updateTimer()
             }
             override fun onFinish() {
