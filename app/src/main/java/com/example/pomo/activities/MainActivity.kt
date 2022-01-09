@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pomo.R
@@ -49,12 +50,37 @@ class MainActivity : AppCompatActivity(), PomodoroAdapter.OnItemClickListener {
         }
         return super.onOptionsItemSelected(item)
     }
+    //SWIPE FUNCTIONALITY
+    private var simpleCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            TODO("Not yet implemented")
+        }
 
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            var position = viewHolder.adapterPosition
+            when(direction){
+
+                ItemTouchHelper.LEFT->{
+
+                    mPomodoroSessionViewModel.deletePomodoroSession(adapter.getData(position))
+                    adapter.notifyItemRemoved(position)
+
+                }
+            }
+        }
+
+    }
     private fun setRecyclerView() {
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
+        val itemTouchHelper = ItemTouchHelper(simpleCallback) //swipe function
+        itemTouchHelper.attachToRecyclerView(recyclerView) //swipe function
         mPomodoroSessionViewModel = ViewModelProvider(this).get(PomodoroSessionViewModel::class.java)
         mPomodoroSessionViewModel.readAllData.observe(this, Observer { pomodoroSession ->
             adapter.setData(pomodoroSession)

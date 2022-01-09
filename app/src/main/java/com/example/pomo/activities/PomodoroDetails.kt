@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -22,6 +23,8 @@ class PomodoroDetails : AppCompatActivity() {
     private lateinit var mPomodoroSessionViewModel: PomodoroSessionViewModel
     private lateinit var message: PomodoroDataItem
     private val startTime = Calendar.getInstance().time
+    private var red = true
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,13 +52,39 @@ class PomodoroDetails : AppCompatActivity() {
         val studyStopWatch: Stopwatch =
             Stopwatch(timeLeftInMilliseconds) {
                 val currentActivity: RelativeLayout = findViewById(R.id.pomo_details)
-                currentActivity.setBackgroundColor(Color.parseColor("#00ff00"))
-                breakStopWatch.startTimer() 
+                currentActivity.setBackgroundColor(Color.parseColor("#2E8B57"))
+                breakStopWatch.startTimer()
+                red=false
             }
         studyStopWatch.startTimer()
         studyStopWatch.countDownText.observe(this, Observer<String> { countdown ->
             countdownText.text = countdown
         })
+        val pauseTimer = findViewById<Button>(R.id.pause_button)
+
+        pauseTimer.setOnClickListener{
+            if(pauseTimer.text == "PAUSE"){ //IF THE BUTTON says PAUSE
+                if(red){ //red background PAUSE TIMER
+                    studyStopWatch.stopTimer()
+                    pauseTimer.text="RESUME"
+
+                }else{  // green background PAUSE TIMER
+                    breakStopWatch.stopTimer()
+                    pauseTimer.text="RESUME"
+
+                }
+            } else{
+                if(red){
+                    studyStopWatch.startTimer()
+                    pauseTimer.text="PAUSE"
+                }else{
+                    breakStopWatch.startTimer()
+                    pauseTimer.text="PAUSE"
+                }
+            }
+
+
+        }
     }
 
     private fun insertDataToDatabase() {
