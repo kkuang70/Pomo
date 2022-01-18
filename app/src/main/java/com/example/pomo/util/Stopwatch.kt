@@ -9,6 +9,7 @@ class Stopwatch(timeLeftInMilliseconds: Float, finishedFn: () -> Unit) {
     private var timeLeftInMilliseconds: Float = timeLeftInMilliseconds
     private var finishedFn = finishedFn
     private var timerRunning: Boolean = false
+
     private val _countDownText = MutableLiveData<String>()
     var countDownText : LiveData<String> = _countDownText
 
@@ -30,10 +31,10 @@ class Stopwatch(timeLeftInMilliseconds: Float, finishedFn: () -> Unit) {
         countDownTimer.cancel()
     }
     fun endTimer(){
-        timeLeftInMilliseconds = 0F
-        updateTimer()
 
+        finishedFn()
     }
+
 
     fun updateTimer() {
         val minutes: Int = (timeLeftInMilliseconds / 60000).toInt()
@@ -44,6 +45,7 @@ class Stopwatch(timeLeftInMilliseconds: Float, finishedFn: () -> Unit) {
             timeLeftText += "0"
         }
         timeLeftText += seconds
+
         _countDownText.value = timeLeftText
     }
 }

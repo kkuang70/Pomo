@@ -1,5 +1,6 @@
 package com.example.pomo.activities
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +8,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.pomo.R
@@ -60,6 +62,43 @@ class PomodoroDetails : AppCompatActivity() {
         studyStopWatch.countDownText.observe(this, Observer<String> { countdown ->
             countdownText.text = countdown
         })
+
+
+        //CANCEL TIMER BUTTON START--------------------------------------------------------------------------------------
+        val cancelTimer = findViewById<Button>(R.id.cancel_button)
+        cancelTimer.setOnClickListener {
+            fun check(x : Stopwatch, y : String){
+                val dialogBuilder = AlertDialog.Builder(this)
+                dialogBuilder.setMessage("Do you want to cancel $y timer?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes",DialogInterface.OnClickListener{
+                            dialog, id -> x.endTimer()
+                    })
+                    .setNegativeButton("No", DialogInterface.OnClickListener{
+                            dialog, id -> x.startTimer()
+                    })
+                val alert = dialogBuilder.create()
+                alert.show()
+            }
+
+
+            if(red){
+                studyStopWatch.stopTimer()
+                check(studyStopWatch, "study")
+
+                //studyStopWatch.endTimer()
+            }else{
+                breakStopWatch.stopTimer()
+                check(breakStopWatch, "break")
+
+
+            }
+        }
+
+        //CANCEL TIMER BUTTON END ----------------------------------------------------------------------------------------
+
+        //PAUSE TIMER BUTTON START----------------------------------------------------------------------------------------
+
         val pauseTimer = findViewById<Button>(R.id.pause_button)
 
         pauseTimer.setOnClickListener{
@@ -85,6 +124,8 @@ class PomodoroDetails : AppCompatActivity() {
 
 
         }
+
+        //PAUSE TIMER BUTTON END------------------------------------------------------------------------------------------------
     }
 
     private fun insertDataToDatabase() {
@@ -94,7 +135,6 @@ class PomodoroDetails : AppCompatActivity() {
         val breakTime = message.breakTime
         val startTime = startTime.toString()
         val endTime = Calendar.getInstance().time.toString()
-
         val pomodoroSessionItem = PomodoroSession(0, title.toString(), description, studyTime, breakTime, startTime, endTime)
         mPomodoroSessionViewModel.addPomodoroSession(pomodoroSessionItem)
     }
