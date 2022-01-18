@@ -29,6 +29,11 @@ class Stopwatch(timeLeftInMilliseconds: Float, finishedFn: () -> Unit) {
     fun stopTimer() {
         countDownTimer.cancel()
     }
+    fun endTimer(){
+        timeLeftInMilliseconds = 0F
+        updateTimer()
+
+    }
 
     fun updateTimer() {
         val minutes: Int = (timeLeftInMilliseconds / 60000).toInt()

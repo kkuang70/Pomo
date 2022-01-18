@@ -10,10 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pomo">
         <activity android:name=".activities.PomodoroDetails"></activity>
-        <activity
-            android:name=".MainActivity2"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/Theme.Pomo.NoActionBar" />
+        <activity android:name=".activities.ItemActivity"/>
         <activity android:name=".activities.CreatePomoItem" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>
