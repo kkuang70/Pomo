@@ -20,7 +20,6 @@ class ItemActivity:AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_information)
         val item = intent.getSerializableExtra("POMOITEM") as PomodoroSession
-       // Toast.makeText(this, item.toString(), Toast.LENGTH_SHORT).show()
 
         val titleView = findViewById<TextView>(R.id.pomo_title_itemActivity)
         val describeView = findViewById<TextView>(R.id.pomo_description_itemActivity)
@@ -37,14 +36,3 @@ class ItemActivity:AppCompatActivity() {
 
     }
 }
-/*
-data class PomodoroSession (
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
-    val title: String,
-    val description: String,
-    val studyMinutes: Float,
-    val breakMinutes: Float,
-    val startDateTime: String,
-    val endDateTime: String
-) : Serializable*/

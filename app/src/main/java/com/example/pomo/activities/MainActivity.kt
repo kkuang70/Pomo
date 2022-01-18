@@ -35,17 +35,10 @@ class MainActivity : AppCompatActivity(), PomodoroAdapter.OnItemClickListener {
 
     override fun onItemClick(position: Int) {
         val pomo = adapter.getData(position)
-        //Toast.makeText(this, "Item ${adapter.getData(position)} clicked", Toast.LENGTH_SHORT).show()
         val l1 = PomodoroSession(pomo.id,pomo.title, pomo.description, pomo.studyMinutes, pomo.breakMinutes, pomo.startDateTime, pomo.endDateTime)
         val i =Intent(this, ItemActivity::class.java)
         i.putExtra("POMOITEM", l1 as Serializable )
         startActivity(i)
-/*
-
-val intent = Intent(this, PomodoroDetails::class.java).apply {
-            putExtra("Message", pomodoroDataItem)
-        mPomodoroSessionViewModel.deletePomodoroSession(adapter.getData(position))
-        adapter.notifyItemRemoved(position)*/
     }
 
     fun addItemScreen(view: View) {
