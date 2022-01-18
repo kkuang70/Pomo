@@ -15,9 +15,12 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pomo.R
+import com.example.pomo.model.PomodoroSession
 import com.example.pomo.viewmodel.PomodoroSessionViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.Serializable
+import java.util.*
 
 class MainActivity : AppCompatActivity(), PomodoroAdapter.OnItemClickListener {
     private val adapter = PomodoroAdapter(this)
@@ -31,8 +34,16 @@ class MainActivity : AppCompatActivity(), PomodoroAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(position: Int) {
-        Toast.makeText(this, "Item $position clicked", Toast.LENGTH_SHORT).show()
+        val pomo = adapter.getData(position)
+        //Toast.makeText(this, "Item ${adapter.getData(position)} clicked", Toast.LENGTH_SHORT).show()
+        val l1 = PomodoroSession(pomo.id,pomo.title, pomo.description, pomo.studyMinutes, pomo.breakMinutes, pomo.startDateTime, pomo.endDateTime)
+        val i =Intent(this, ItemActivity::class.java)
+        i.putExtra("POMOITEM", l1 as Serializable )
+        startActivity(i)
 /*
+
+val intent = Intent(this, PomodoroDetails::class.java).apply {
+            putExtra("Message", pomodoroDataItem)
         mPomodoroSessionViewModel.deletePomodoroSession(adapter.getData(position))
         adapter.notifyItemRemoved(position)*/
     }
@@ -87,3 +98,5 @@ class MainActivity : AppCompatActivity(), PomodoroAdapter.OnItemClickListener {
         })
     }
 }
+
+

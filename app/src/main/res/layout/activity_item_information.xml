@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="25dp"
+    android:gravity="top"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/pomo_title_itemActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:maxLength="50"
+        android:maxLines="1"
+        android:text="TextView"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/pomo_description_itemActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/pomo_study"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Study Minutes:"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/pomo_study_time_itemActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="number"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/pomo_break"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Break Minutes:"
+        android:layout_marginTop="15dp"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/pomo_break_time_itemActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="number"
+
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/start_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start:"
+        android:layout_marginTop="15dp"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/start_time_itemActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="number"
+
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/end_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="End:"
+        android:layout_marginTop="15dp"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/end_time_itemActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="number"
+        android:textSize="20sp"
+
+        />
+
+</LinearLayout>
