@@ -25,7 +25,6 @@ class PomodoroAdapter(
     override fun onBindViewHolder(holder: PomodoroViewHolder, position: Int) {
         val currentItem = pomodoroList[position]
 
-//        holder.imageView.setImageResource(currentItem.imageResource)
         holder.titleView.text = currentItem.title
         holder.descriptionView.text = currentItem.description
         holder.timeSplit.text = "${currentItem.studyMinutes} / ${currentItem.breakMinutes}"
@@ -37,7 +36,6 @@ class PomodoroAdapter(
     inner class PomodoroViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
 
-//        val imageView: ImageView = itemView.findViewById(R.id.pomo_image_view)
         val titleView: TextView = itemView.findViewById(R.id.pomo_title_view)
         val descriptionView: TextView = itemView.findViewById(R.id.pomo_description_view)
         val timeSplit: TextView = itemView.findViewById(R.id.time_split)

@@ -13,16 +13,11 @@ import kotlinx.coroutines.launch
 class PomodoroSessionViewModel(application: Application): AndroidViewModel(application) {
     val readAllData: LiveData<List<PomodoroSession>>
     private val repository: PomodoroSessionRepository
-//    private val selectedItem: LiveData<PomodoroSession>
 
     fun addPomodoroSession(pomodoroSession: PomodoroSession) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addPomodoroSession(pomodoroSession)
         }
-    }
-
-    fun selectPomodoroItem() {
-
     }
 
     fun deletePomodoroSession(pomodoroSession: PomodoroSession) {
