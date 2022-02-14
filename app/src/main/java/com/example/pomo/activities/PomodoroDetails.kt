@@ -20,16 +20,11 @@ import java.util.*
 
 class PomodoroDetails : AppCompatActivity() {
     private lateinit var countdownText: TextView
-    private var timeLeftInMilliseconds: Float = 0.0F
-    private var breakTimeLeftInMilliseconds: Float = 0.0F
-
     private lateinit var mPomodoroSessionViewModel: PomodoroSessionViewModel
     private lateinit var message: PomodoroDataItem
+    private lateinit var currentStopWatch: Stopwatch
     private val startTime = Calendar.getInstance().time
-    private var red = true
-    private var currentStopWatch: Stopwatch? = null
-
-
+//    private var red = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,23 +32,60 @@ class PomodoroDetails : AppCompatActivity() {
 
         message = intent.getSerializableExtra("Message") as PomodoroDataItem
         mPomodoroSessionViewModel = ViewModelProvider(this).get(PomodoroSessionViewModel::class.java)
-
-        if (message != null) {
-            timeLeftInMilliseconds = message.studyTime * 60000
-            breakTimeLeftInMilliseconds = message.breakTime * 60000
-        }
-
         countdownText = findViewById(R.id.countdown_text)
 
-        val breakStopwatch = createBreakStopWatch()
-        val studyStopWatch = createStudyStopWatch(breakStopwatch)
+        val breakStopwatch = createBreakStopWatch(message.studyTime * 60000)
+        val studyStopWatch = createStudyStopWatch(message.breakTime * 60000, breakStopwatch)
         studyStopWatch.startTimer()
         currentStopWatch = studyStopWatch
         createPauseButton()
+        createCancelButton()
+    }
 
+    private fun createBreakStopWatch(seconds: Float): Stopwatch {
+        val breakStopWatch = Stopwatch(seconds) {
+            insertDataToDatabase()
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+        breakStopWatch.countDownText.observe(this) { countdown ->
+            countdownText.text = countdown
+        }
+        return breakStopWatch
+    }
 
+    private fun createStudyStopWatch(seconds: Float, breakStopwatch: Stopwatch): Stopwatch {
+        val studyStopWatch =
+            Stopwatch(seconds) {
+                val currentActivity: RelativeLayout = findViewById(R.id.pomo_details)
+                currentActivity.setBackgroundColor(Color.parseColor("#2E8B57"))
+                breakStopwatch.startTimer()
+                currentStopWatch = breakStopwatch
+            }
+        studyStopWatch.countDownText.observe(this) { countdown ->
+            countdownText.text = countdown
+        }
+        return studyStopWatch
+    }
 
+    private fun createPauseButton() {
+        val pauseTimer = findViewById<ImageButton>(R.id.pause_button)
+        var paused = false
 
+        pauseTimer.setOnClickListener {
+            if (paused)
+            {
+                currentStopWatch.startTimer()
+                pauseTimer.setImageResource(R.drawable.ic_baseline_pause_circle_outline_24)
+            } else {
+                currentStopWatch.stopTimer()
+                pauseTimer.setImageResource(R.drawable.ic_baseline_play_circle_outline_24)
+            }
+            paused = !paused
+        }
+    }
+
+    private fun createCancelButton()
+    {
 //        val cancelTimer = findViewById<Button>(R.id.cancel_button)
 //        cancelTimer.setOnClickListener {
 //            fun check(x : Stopwatch, y : String){
@@ -81,48 +113,6 @@ class PomodoroDetails : AppCompatActivity() {
 //
 //            }
 //        }
-
-    }
-    private fun createBreakStopWatch(): Stopwatch {
-        val breakStopWatch = Stopwatch(breakTimeLeftInMilliseconds) {
-            insertDataToDatabase()
-            startActivity(Intent(this, MainActivity::class.java))
-        }
-        breakStopWatch.countDownText.observe(this) { countdown ->
-            countdownText.text = countdown
-        }
-        return breakStopWatch
-    }
-
-    private fun createStudyStopWatch(breakStopwatch: Stopwatch): Stopwatch {
-        val studyStopWatch =
-            Stopwatch(timeLeftInMilliseconds) {
-                val currentActivity: RelativeLayout = findViewById(R.id.pomo_details)
-                currentActivity.setBackgroundColor(Color.parseColor("#2E8B57"))
-                breakStopwatch.startTimer()
-                currentStopWatch = breakStopwatch
-            }
-        studyStopWatch.countDownText.observe(this) { countdown ->
-            countdownText.text = countdown
-        }
-        return studyStopWatch
-    }
-
-    private fun createPauseButton() {
-        val pauseTimer = findViewById<ImageButton>(R.id.pause_button)
-        var paused = false
-
-        pauseTimer.setOnClickListener {
-            if (paused)
-            {
-                currentStopWatch!!.startTimer()
-                pauseTimer.setImageResource(R.drawable.ic_baseline_pause_circle_outline_24)
-            } else {
-                currentStopWatch!!.stopTimer()
-                pauseTimer.setImageResource(R.drawable.ic_baseline_play_circle_outline_24)
-            }
-            paused = !paused
-        }
     }
 
     private fun insertDataToDatabase() {
